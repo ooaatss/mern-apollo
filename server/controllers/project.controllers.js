@@ -1,4 +1,5 @@
 import Project from "../models/Project.js";
+import Task from "../models/Task.js";
 import { isValidObjectId } from "mongoose";
 
 export const createProject = async (args) => {
@@ -23,4 +24,30 @@ export const findOneProject = async (projectId = "") => {
   const project = await Project.findById(projectId);
 
   return project;
+};
+
+export const updateProject = async (projectId = "", newProject = {}) => {
+  if (!isValidObjectId(projectId)) throw Error("the projectId is a invalid id");
+
+  const updateProject = Project.findOneAndUpdate(
+    { _id: projectId },
+    { ...newProject },
+    { new: true }
+  );
+
+  if (!updateProject) throw Error("Project not found!");
+
+  return updateProject;
+};
+
+export const deleteProject = async (projectId = "") => {
+  if (!isValidObjectId(projectId)) throw Error("the projectId is a invalid id");
+
+  const deleteProject = await Project.findOneAndDelete(projectId);
+
+  if (!deleteProject) throw Error("Project not found!");
+
+  await Task.deleteMany({ projectId: projectId });
+
+  return deleteProject;
 };

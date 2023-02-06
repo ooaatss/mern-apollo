@@ -2,6 +2,8 @@ import {
   createProject,
   findProjects,
   findOneProject,
+  updateProject,
+  deleteProject,
 } from "../controllers/project.controllers.js";
 import {
   createTask,
@@ -13,6 +15,7 @@ import {
 
 export const resolvers = {
   Query: {
+    // * Projects Operation
     projects: async () => {
       const projects = await findProjects();
       return projects;
@@ -24,6 +27,8 @@ export const resolvers = {
 
       return project;
     },
+
+    // * Task Operations
     tasks: async () => {
       const tasks = findTasks();
       return tasks;
@@ -42,6 +47,22 @@ export const resolvers = {
     createProject: async (_, args) => {
       const project = await createProject(args);
       return project;
+    },
+
+    updateProject: async (_, args) => {
+      const { projectId } = args;
+
+      const updatedProject = await updateProject(projectId, { ...args });
+
+      return updatedProject;
+    },
+
+    deleteProject: async (_, args) => {
+      const { projectId } = args;
+
+      const deletedProject = await deleteProject(projectId);
+
+      return deletedProject;
     },
 
     // * Task Operations
@@ -68,7 +89,6 @@ export const resolvers = {
   //  * Relations
   Project: {
     tasks: async (parent) => {
-
       const { _id } = parent;
 
       const tasks = await findTasks(_id);
