@@ -7,6 +7,7 @@ import { expressMiddleware } from "@apollo/server/express4";
 dotenv.config()
 export async function startApolloServer(typeDefs, resolvers) {
   const app = express();
+  app.use(cors())
   const port = process.env.SERVER_PORT || 4000;
   const httpServer = http.createServer(app);
 

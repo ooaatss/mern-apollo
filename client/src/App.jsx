@@ -1,10 +1,10 @@
 import React from "react";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Projects from "./pages/Projects";
-
+import ProjectDetails from "./pages/ProjectDetails";
 const client = new ApolloClient({
-  url: "http://localhost:4000/graphql",
+  uri: "http://localhost:1337/graphql",
   cache: new InMemoryCache(),
 });
 
@@ -13,7 +13,9 @@ const App = () => {
     <ApolloProvider client={client}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Projects />} />
+          <Route path="/" element={<Navigate to="/projects" />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/projects/:id" element={<ProjectDetails />} />
         </Routes>
       </BrowserRouter>
     </ApolloProvider>
