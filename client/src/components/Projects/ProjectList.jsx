@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { GET_PROJECTS } from "../../graphql/Projects.js";
-
+import ProjectCard from "./ProjectCard";
 const ProjectList = () => {
   const { loading, error, data } = useQuery(GET_PROJECTS);
 
@@ -11,7 +11,7 @@ const ProjectList = () => {
   return (
     <div>
       {data.projects.map((item, index) => (
-        <ul key={index}>{item.name} - {item.description}</ul>
+        <ProjectCard key={index} {...item}/>
       ))}
     </div>
   );

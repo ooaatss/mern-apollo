@@ -15,7 +15,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Navigate to="/projects" />} />
           <Route path="/projects" element={<Projects />} />
-          <Route path="/projects/:id" element={<ProjectDetails />} />
+          <Route path="/projects/:projectId" element={<ProjectDetails />} />
         </Routes>
       </BrowserRouter>
     </ApolloProvider>
